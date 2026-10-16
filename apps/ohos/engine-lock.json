@@ -1,0 +1,8 @@
+{
+  "release": "v1.1.0-rc.22",
+  "commit": "18415aa83a47bd3870c2a1f114b268fc3ed0495a",
+  "minimumApi": 24,
+  "artifact": "UniClipboardEngine.har",
+  "sha256": "df65472233da55754e7108b6dcef30ad777faab1efe0504c706411c19a461cb7",
+  "size": 30451988
+}
