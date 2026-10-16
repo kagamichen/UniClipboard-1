@@ -1,0 +1,127 @@
+{
+  "date": "2026-10-10",
+  "receiver": {
+    "platform": "HarmonyOS API 26 emulator",
+    "bundleName": "app.uniclipboard.harmony.interop",
+    "hapSha256": "ee4948d79563f61cc29db59a0e9cb31ae1b60c4a1a09236e6a9791c2be21d56e"
+  },
+  "peer": {
+    "platform": "macOS",
+    "version": "1.1.2",
+    "mode": "serverHeadless",
+    "isolatedProfile": true
+  },
+  "reboot": {
+    "command": "hdc -t 127.0.0.1:5555 target boot",
+    "commandExitCode": 0,
+    "hdcObservations": [
+      {
+        "seconds": 0.02,
+        "targets": "[Empty]"
+      },
+      {
+        "seconds": 1.05,
+        "targets": "[Empty]"
+      },
+      {
+        "seconds": 2.08,
+        "targets": "[Empty]"
+      },
+      {
+        "seconds": 3.11,
+        "targets": "[Empty]"
+      },
+      {
+        "seconds": 4.14,
+        "targets": "[Empty]"
+      },
+      {
+        "seconds": 5.17,
+        "targets": "[Empty]"
+      },
+      {
+        "seconds": 6.2,
+        "targets": "[Empty]"
+      },
+      {
+        "seconds": 7.22,
+        "targets": "[Empty]"
+      },
+      {
+        "seconds": 8.25,
+        "targets": "[Empty]"
+      },
+      {
+        "seconds": 9.28,
+        "targets": "[Empty]"
+      },
+      {
+        "seconds": 10.31,
+        "targets": "[Empty]"
+      },
+      {
+        "seconds": 11.33,
+        "targets": "[Empty]"
+      },
+      {
+        "seconds": 12.36,
+        "targets": "[Empty]"
+      },
+      {
+        "seconds": 13.39,
+        "targets": "[Empty]"
+      },
+      {
+        "seconds": 14.41,
+        "targets": "[Empty]"
+      }
+    ],
+    "emulatorProcessRemainedRunning": true,
+    "hdcReconnection": "tconn reported already connected; subsequent list showed Connected",
+    "bootComplete": "true",
+    "lockscreenObserved": true,
+    "oldAppPid": 23688,
+    "oldAppAbsentBeforeLaunch": true,
+    "newAppPid": 3380,
+    "readyWithoutPassphraseOrPairing": true
+  },
+  "afterBoot": {
+    "desktopToHarmony": {
+      "peerIdUnchanged": true,
+      "pairedStateAfter": "Trusted",
+      "connected": true,
+      "marker": "UC-reboot-desktop-to-OHOS-1791602511860069000",
+      "report": {
+        "snapshotHash": "blake3v1:d2b9852f7b8df1745d3f01bde2c0d3b2541a78776e15accd16ea89b9de734fea",
+        "atMs": 1791602511905,
+        "totalAccepted": 1,
+        "totalDuplicate": 0,
+        "totalOffline": 0,
+        "totalErrored": 0,
+        "perTarget": [
+          {
+            "deviceId": "357e8696-a680-48e0-9ed4-665372dcda6e",
+            "outcome": "accepted"
+          }
+        ]
+      }
+    },
+    "desktopMarkerVisibleAsHistoryText": true,
+    "harmonyToDesktop": {
+      "marker": "UC-reboot-OHOS-to-desktop-1791602539459766000",
+      "entryId": "61ca8167-713c-4a1e-bd1e-2cf83eed5c59",
+      "contentExact": true,
+      "sizeBytes": 45
+    },
+    "persistence": {
+      "automaticSyncDisabledRetained": true,
+      "preRebootFileHistoryRetained": true
+    }
+  },
+  "limits": [
+    "Single emulator OS reboot; no PIN configured.",
+    "Not physical-device Asset migration, password-protected lockscreen, OS memory reclamation or Wi-Fi/cellular switching.",
+    "Does not cover an in-flight transfer spanning reboot or establish a recovery latency bound.",
+    "Kernel boot_id and uptime were inaccessible to the shell; evidence uses the reboot command, HDC disappearance/reappearance, boot-complete parameter, lockscreen and process replacement."
+  ]
+}

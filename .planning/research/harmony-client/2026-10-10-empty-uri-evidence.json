@@ -1,0 +1,36 @@
+{
+  "date": "2026-10-10",
+  "platform": "HarmonyOS API 26 emulator",
+  "target": "127.0.0.1:5555",
+  "hap": {
+    "sha256": "894721a5f50aa5343d19deb13f4f7e1df005178b7ef01f365f202404707fe969",
+    "bytes": 105518250
+  },
+  "rootCause": {
+    "sdkReadSucceeded": true,
+    "recordCount": 1,
+    "primaryType": "URI",
+    "recordUriPresent": false,
+    "oldHostResult": "OHOS_CLIPBOARD_UNAVAILABLE",
+    "engineStartupResult": "UC_ENGINE:1101:unavailable:true",
+    "engineGate": "Active clipboard register reconciliation propagates true OS read errors."
+  },
+  "verification": {
+    "oldAdapterStartupFailureReproduced": true,
+    "newAdapterStartupSameClipboard": true,
+    "emptyObservationMessage": "本次未发送内容。",
+    "followingProcessRestartReady": true,
+    "regressionsBeforeFix": {
+      "newEmptyUriCasesFailed": 5
+    },
+    "clientTestsPassed": 98,
+    "partialMissingUrisRemainErrors": true,
+    "permissionAndReadErrorsRemainErrors": true,
+    "temporaryInstrumentationRemoved": true
+  },
+  "limits": [
+    "Emulator evidence, not physical-device permission/file-provider acceptance.",
+    "Mixed valid and missing URI records still reject the read; no partial file delivery.",
+    "Independent interop app still has the earlier source snapshot; update it before broader follow-up tests."
+  ]
+}

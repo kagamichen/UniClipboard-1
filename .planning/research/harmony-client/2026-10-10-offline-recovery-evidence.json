@@ -1,0 +1,101 @@
+{
+  "date": "2026-10-10",
+  "environment": {
+    "harmony": "API 26 emulator, app.uniclipboard.harmony.interop",
+    "desktop": "macOS 1.1.2 serverHeadless, isolated profile ohos-admission-20261010",
+    "hapSha256": "ee4948d79563f61cc29db59a0e9cb31ae1b60c4a1a09236e6a9791c2be21d56e"
+  },
+  "onlineBaseline": {
+    "peerId": "357e8696-a680-48e0-9ed4-665372dcda6e",
+    "deviceName": "鸿蒙设备",
+    "pairingState": "Trusted",
+    "lastSeenAtMs": null,
+    "connected": true,
+    "channel": "direct",
+    "connectionAddress": "[2408:8248:45:e390:35e7:c9a6:51a5:7b3e]:58774"
+  },
+  "offlineTransition": {
+    "action": "verified daemon PID executable, sent SIGTERM, then sent text from Harmony",
+    "uiReport": "已接收 0 · 重复 0 · 离线 1 · 等待 0 · 失败 0",
+    "offlineCount": 1,
+    "offlineMarker": "UC-offline-send-1791600000000000000",
+    "desktopHistoryForOfflineMarker": false,
+    "interpretation": "Offline send is not persisted as a desktop history item; no automatic history resend was inferred."
+  },
+  "recovery": {
+    "peerSamples": [
+      {
+        "i": 0,
+        "connected": false,
+        "state": "Trusted",
+        "peerId": "357e8696-a680-48e0-9ed4-665372dcda6e"
+      },
+      {
+        "i": 1,
+        "connected": false,
+        "state": "Trusted",
+        "peerId": "357e8696-a680-48e0-9ed4-665372dcda6e"
+      },
+      {
+        "i": 2,
+        "connected": false,
+        "state": "Trusted",
+        "peerId": "357e8696-a680-48e0-9ed4-665372dcda6e"
+      },
+      {
+        "i": 3,
+        "connected": false,
+        "state": "Trusted",
+        "peerId": "357e8696-a680-48e0-9ed4-665372dcda6e"
+      },
+      {
+        "i": 4,
+        "connected": false,
+        "state": "Trusted",
+        "peerId": "357e8696-a680-48e0-9ed4-665372dcda6e"
+      },
+      {
+        "i": 5,
+        "connected": false,
+        "state": "Trusted",
+        "peerId": "357e8696-a680-48e0-9ed4-665372dcda6e"
+      },
+      {
+        "i": 6,
+        "connected": false,
+        "state": "Trusted",
+        "peerId": "357e8696-a680-48e0-9ed4-665372dcda6e"
+      },
+      {
+        "i": 7,
+        "connected": false,
+        "state": "Trusted",
+        "peerId": "357e8696-a680-48e0-9ed4-665372dcda6e"
+      },
+      {
+        "i": 8,
+        "connected": true,
+        "state": "Trusted",
+        "peerId": "357e8696-a680-48e0-9ed4-665372dcda6e"
+      }
+    ],
+    "peerIdUnchanged": true,
+    "trustedAfterRecovery": true,
+    "connectedAfterRecovery": true,
+    "newHarmonySendUi": "已接收 1 · 重复 0 · 离线 0 · 等待 0 · 失败 0",
+    "desktopDetail": {
+      "id": "75f6ef50-7d69-43e6-981a-9e649d16c972",
+      "content": "UC-after-offline-1791600000000000002",
+      "sizeBytes": 36,
+      "createdAtMs": 1791603339468,
+      "activeTimeMs": 1791603339468,
+      "mimeType": "text/plain"
+    },
+    "contentExact": true
+  },
+  "limits": [
+    "This stops and restarts the desktop daemon, not a physical network outage or Wi-Fi/cellular switch.",
+    "The offline marker intentionally has no desktop history record under transient clipboard semantics, so no retry of that exact marker was possible.",
+    "Does not prove automatic resend, relay failover, or physical-device acceptance."
+  ]
+}

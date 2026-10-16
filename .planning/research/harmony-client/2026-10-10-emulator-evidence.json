@@ -1,0 +1,211 @@
+{
+  "scope": "API 26 emulators only; no physical-device or release-signature claim",
+  "hap_sha256": "771ff9c253ae3ed505ea07cdf341fe9378d57f4ef05e7ce8c33b3e670b664dbb",
+  "zip": {
+    "zip_size": 8389242,
+    "zip_sha256": "5f14bc3031d8a8e70157d02e32bd78e95f17929644d7fdb93665e69c8578fa17",
+    "entries": [
+      {
+        "name": "empty-verify.txt",
+        "size": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "name": "large-8MiB.bin",
+        "size": 8388608,
+        "sha256": "8eee7f42b731bc9342126e81252db3aad8455bd7d74265f3f83c46fa53a67c62"
+      },
+      {
+        "name": "empty.txt",
+        "size": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "name": "反向 空格.txt",
+        "size": 36,
+        "sha256": "479df879e5b4308b3eee7f9108b2e6d024c78e2e4dbdffd4a7ba551a78533b15"
+      }
+    ],
+    "passed": true
+  },
+  "restart_cycles": [
+    {
+      "cycle": 1,
+      "events": [
+        {
+          "event": "stopped",
+          "elapsed": 0.33,
+          "device": "127.0.0.1:5555",
+          "previous_pid": "15231"
+        },
+        {
+          "event": "stopped",
+          "elapsed": 0.66,
+          "device": "127.0.0.1:10001",
+          "previous_pid": "12607"
+        },
+        {
+          "event": "started",
+          "elapsed": 0.77,
+          "device": "127.0.0.1:5555"
+        },
+        {
+          "event": "started",
+          "elapsed": 0.89,
+          "device": "127.0.0.1:10001"
+        },
+        {
+          "event": "peer_online",
+          "elapsed": 8.77,
+          "device": "127.0.0.1:5555"
+        },
+        {
+          "event": "peer_online",
+          "elapsed": 11.15,
+          "device": "127.0.0.1:10001"
+        },
+        {
+          "event": "sent",
+          "elapsed": 18.57,
+          "source": "127.0.0.1:5555",
+          "target": "127.0.0.1:10001",
+          "token": "UC-restart-1-1791593934878366000"
+        },
+        {
+          "event": "received_in_history",
+          "elapsed": 22.72,
+          "device": "127.0.0.1:10001"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "cycle": 2,
+      "events": [
+        {
+          "event": "stopped",
+          "elapsed": 0.2,
+          "device": "127.0.0.1:5555",
+          "previous_pid": "17985"
+        },
+        {
+          "event": "stopped",
+          "elapsed": 0.52,
+          "device": "127.0.0.1:10001",
+          "previous_pid": "13072"
+        },
+        {
+          "event": "started",
+          "elapsed": 0.69,
+          "device": "127.0.0.1:5555"
+        },
+        {
+          "event": "started",
+          "elapsed": 0.81,
+          "device": "127.0.0.1:10001"
+        },
+        {
+          "event": "peer_online",
+          "elapsed": 8.73,
+          "device": "127.0.0.1:5555"
+        },
+        {
+          "event": "peer_online",
+          "elapsed": 11.14,
+          "device": "127.0.0.1:10001"
+        },
+        {
+          "event": "sent",
+          "elapsed": 18.69,
+          "source": "127.0.0.1:10001",
+          "target": "127.0.0.1:5555",
+          "token": "UC-restart-2-1791593970627421000"
+        },
+        {
+          "event": "received_in_history",
+          "elapsed": 22.93,
+          "device": "127.0.0.1:5555"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "cycle": 3,
+      "events": [
+        {
+          "event": "stopped",
+          "elapsed": 0.23,
+          "device": "127.0.0.1:5555",
+          "previous_pid": "19907"
+        },
+        {
+          "event": "stopped",
+          "elapsed": 0.48,
+          "device": "127.0.0.1:10001",
+          "previous_pid": "15580"
+        },
+        {
+          "event": "started",
+          "elapsed": 0.6,
+          "device": "127.0.0.1:5555"
+        },
+        {
+          "event": "started",
+          "elapsed": 0.72,
+          "device": "127.0.0.1:10001"
+        },
+        {
+          "event": "peer_online",
+          "elapsed": 8.5,
+          "device": "127.0.0.1:5555"
+        },
+        {
+          "event": "peer_online",
+          "elapsed": 10.98,
+          "device": "127.0.0.1:10001"
+        },
+        {
+          "event": "sent",
+          "elapsed": 18.47,
+          "source": "127.0.0.1:5555",
+          "target": "127.0.0.1:10001",
+          "token": "UC-restart-3-1791593999182243000"
+        },
+        {
+          "event": "received_in_history",
+          "elapsed": 22.64,
+          "device": "127.0.0.1:10001"
+        }
+      ],
+      "passed": true
+    }
+  ],
+  "lock_unlock": {
+    "screen_locked": true,
+    "credential_locked": false,
+    "background_peer_offline": true,
+    "foreground_peer_online": true,
+    "text_verification": {
+      "scenario": "unlock",
+      "source": "127.0.0.1:10001",
+      "target": "127.0.0.1:5555",
+      "token": "UC-unlock-1791594200692635000",
+      "received": true,
+      "elapsed": 11.43
+    },
+    "scope": "Emulator without credential lock; operation time includes UI and tool overhead"
+  },
+  "coldboot": {
+    "status": "pending_license_consent",
+    "peer_stopped": true,
+    "exit_code": 1,
+    "error": "Please agree to the agreement first. Unable to start the emulator",
+    "connected_targets_at_followup": [
+      "127.0.0.1:5555"
+    ]
+  },
+  "remaining_environment_limits": {
+    "network_outage": "Not executed; traffic uses eth0, Wi-Fi toggle is insufficient evidence",
+    "device_plaintext_scan": "Not executed; release private directory access denied"
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "date": "2026-10-10",
+  "environment": {
+    "platform": "HarmonyOS API 26 emulator",
+    "bundleName": "app.uniclipboard.harmony.interop",
+    "desktop": "macOS 1.1.2 isolated serverHeadless profile",
+    "hapSha256": "ee4948d79563f61cc29db59a0e9cb31ae1b60c4a1a09236e6a9791c2be21d56e"
+  },
+  "atLimit": {
+    "source": "at-limit.png",
+    "dimensions": [
+      4096,
+      4096
+    ],
+    "pixels": 16777216,
+    "operation": "browser copy -> system Pasteboard -> explicit Send Image",
+    "desktopEntryId": "e861436a-a74e-4adc-9736-bfb0dbf50a47",
+    "receivedDimensions": [
+      4096,
+      4096
+    ],
+    "receivedEncodedBytes": 304492,
+    "receivedSha256": "d8f872651dcf4db79a0f68a2cdea8bd71055a146629e4e71fbdc94243be7ec19",
+    "allDecodedPixelsMatch": true
+  },
+  "overLimit": {
+    "source": "over-limit.png",
+    "dimensions": [
+      4097,
+      4096
+    ],
+    "pixels": 16781312,
+    "operation": "browser copy -> system Pasteboard -> explicit Send Image",
+    "uiFeedback": "图片发送未完成，请检查剪贴板图片、同步设置和连接后重试。",
+    "desktopImageIdsBefore": [
+      "e861436a-a74e-4adc-9736-bfb0dbf50a47",
+      "9e7e80af-8ae7-4437-93bc-1320887d9606"
+    ],
+    "desktopImageIdsAfter": [
+      "e861436a-a74e-4adc-9736-bfb0dbf50a47",
+      "9e7e80af-8ae7-4437-93bc-1320887d9606"
+    ],
+    "noNewDesktopImage": true,
+    "appProcessAfterFailure": "3380",
+    "controlsReadyAfterFailure": true
+  },
+  "limits": [
+    "This emulator test exercises the configured 16,777,216-pixel limit and one-pixel-over rejection.",
+    "It does not prove HDR/color-profile handling, memory-pressure behavior, physical-device ImageKit behavior, or interrupted image transfer recovery.",
+    "The UI intentionally presents a generic image-send failure; the lower-level codec error is covered by host tests."
+  ]
+}

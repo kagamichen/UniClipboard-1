@@ -1,0 +1,116 @@
+{
+  "hap_sha256": "771ff9c253ae3ed505ea07cdf341fe9378d57f4ef05e7ce8c33b3e670b664dbb",
+  "device": "127.0.0.1:5555",
+  "search_passed": true,
+  "clipboard_restore_passed": false,
+  "diagnostic_export_partial": true,
+  "sentinel_present_in_export": false,
+  "restore_events": [
+    {
+      "timestamp": "2026-10-10T01:15:19.141110Z",
+      "message": "restore_plain.execute requested",
+      "fields": {
+        "entry_id": "fdfaa037-c427-4180-aa9b-1b629fd2b904"
+      },
+      "location": "uc-application/src/clipboard/restore/restore_as_plain_text.rs:140"
+    },
+    {
+      "timestamp": "2026-10-10T01:15:19.144134Z",
+      "message": "clipboard_write_coordinator: OS clipboard write failed",
+      "fields": {
+        "circuit_tripped": false,
+        "consecutive_failures": 2,
+        "error_kind": "os_write_failed",
+        "event": "os_write_failed",
+        "intent": "LocalRestore",
+        "threshold": 5
+      },
+      "location": "uc-application/src/clipboard/write/coordinator.rs:341"
+    },
+    {
+      "timestamp": "2026-10-10T01:15:19.144291Z",
+      "message": "clipboard restore failed",
+      "fields": {},
+      "location": "uc-engine/src/operations/clipboard/restore.rs:56"
+    },
+    {
+      "timestamp": "2026-10-10T01:16:23.841949Z",
+      "message": "restore_plain.execute requested",
+      "fields": {
+        "entry_id": "fdfaa037-c427-4180-aa9b-1b629fd2b904"
+      },
+      "location": "uc-application/src/clipboard/restore/restore_as_plain_text.rs:140"
+    },
+    {
+      "timestamp": "2026-10-10T01:16:23.843405Z",
+      "message": "clipboard_write_coordinator: OS clipboard write failed",
+      "fields": {
+        "circuit_tripped": false,
+        "consecutive_failures": 3,
+        "error_kind": "os_write_failed",
+        "event": "os_write_failed",
+        "intent": "LocalRestore",
+        "threshold": 5
+      },
+      "location": "uc-application/src/clipboard/write/coordinator.rs:341"
+    },
+    {
+      "timestamp": "2026-10-10T01:16:23.843524Z",
+      "message": "clipboard restore failed",
+      "fields": {},
+      "location": "uc-engine/src/operations/clipboard/restore.rs:56"
+    }
+  ],
+  "typed_array_fix": true,
+  "fixed_hap_sha256": "2039c4c883d73fb5501d330d94885c254cd3b15ad6b1428f55b45a753ee0e518",
+  "clipboard_restore_after_fix": {
+    "device": "127.0.0.1:5555",
+    "token": "UC-History-1791594902244984000",
+    "read_back": "UC-History-1791594902244984000",
+    "passed": true
+  },
+  "delete_after_restart": {
+    "device": "127.0.0.1:5555",
+    "token": "UC-Delete2-1791596158420371000",
+    "restore_buttons_before_delete": 1,
+    "after_delete": 0,
+    "after_restart": 0
+  },
+  "file_export_after_fix": {
+    "hap_sha256": "2039c4c883d73fb5501d330d94885c254cd3b15ad6b1428f55b45a753ee0e518",
+    "scope": "A system export of previously received collection; not a new cross-device transfer",
+    "zip_sha256": "5f14bc3031d8a8e70157d02e32bd78e95f17929644d7fdb93665e69c8578fa17",
+    "zip_size": 8389242,
+    "entries": [
+      {
+        "name": "empty-verify.txt",
+        "size": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "name": "large-8MiB.bin",
+        "size": 8388608,
+        "sha256": "8eee7f42b731bc9342126e81252db3aad8455bd7d74265f3f83c46fa53a67c62"
+      },
+      {
+        "name": "empty.txt",
+        "size": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "name": "反向 空格.txt",
+        "size": 36,
+        "sha256": "479df879e5b4308b3eee7f9108b2e6d024c78e2e4dbdffd4a7ba551a78533b15"
+      }
+    ],
+    "passed": true
+  },
+  "picker_background_race_fix": {
+    "status": "reverted",
+    "hap_sha256": "6385fc215a4a16195046560c40147a9e99d5bce1aa37d4429760b73097c6d97a",
+    "node_tests": "82/82",
+    "python_tests": "17/17",
+    "scope": "Experiment only, not a verified fix",
+    "reason": "Unbounded waiting before suspension violates foreground-only lifecycle; no system validation"
+  }
+}

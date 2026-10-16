@@ -1,0 +1,78 @@
+{
+  "date": "2026-10-10",
+  "sender": {
+    "platform": "HarmonyOS API 26 emulator",
+    "bundleName": "app.uniclipboard.harmony.interop",
+    "hapSha256": "ee4948d79563f61cc29db59a0e9cb31ae1b60c4a1a09236e6a9791c2be21d56e",
+    "hapBytes": 105518208,
+    "automaticSync": false,
+    "permission": "本次使用允许"
+  },
+  "receiver": {
+    "platform": "macOS",
+    "version": "1.1.2",
+    "residency": "serverHeadless",
+    "systemClipboardEnabled": false
+  },
+  "procedure": [
+    "Restore synthetic image from original Harmony app history to system Pasteboard.",
+    "Explicitly send image from isolated paired Harmony app with automatic synchronization disabled.",
+    "Download PNG from authenticated desktop entry resource API and decode RGBA.",
+    "Reconstruct historical test PNG with filter type 0 and zlib level 6; its SHA-256 matches the pre-existing source fingerprint.",
+    "Compare every decoded RGBA byte between reconstructed source and received PNG."
+  ],
+  "sendReport": {
+    "accepted": 1,
+    "duplicate": 0,
+    "offline": 0,
+    "pending": 0,
+    "errored": 0
+  },
+  "received": {
+    "entryId": "9e7e80af-8ae7-4437-93bc-1320887d9606",
+    "mimeType": "image/png",
+    "sizeBytes": 253,
+    "sha256": "3e87d9d515d509f79f6f94cbd70fa3b443320259d5c39b9f2f076ce25c75ae04",
+    "dimensions": [
+      64,
+      48
+    ],
+    "colors": [
+      [
+        1536,
+        [
+          255,
+          120,
+          0,
+          255
+        ]
+      ],
+      [
+        1536,
+        [
+          0,
+          190,
+          220,
+          255
+        ]
+      ]
+    ],
+    "rgbaSha256": "6b18102dd6e676ecd38634ea2104ec1b97ce2f639b58f77258e9da557fc440da"
+  },
+  "source": {
+    "sha256": "78d5615424d91bd60f67a5a2eda69cc3318f595a66c7c30beb4ead9cf42e60e7",
+    "bytes": 145,
+    "allDecodedPixelsEqual": true
+  },
+  "reverseResend": {
+    "httpStatus": 409,
+    "code": "ENTRY_NOT_RESENDABLE",
+    "reason": "remoteOrigin",
+    "interpretation": "Remote-origin resend rejection; not successful reverse image transfer."
+  },
+  "limits": [
+    "Single 64x48 SDR PNG, emulator only.",
+    "Does not cover macOS system clipboard capture, a fresh desktop-origin image, large/HDR/multiple-format images, memory pressure or interrupted transfers.",
+    "The installed interop HAP uses local Engine development artifacts and emulator signing; not a formal release."
+  ]
+}

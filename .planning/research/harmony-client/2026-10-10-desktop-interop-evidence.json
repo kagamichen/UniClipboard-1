@@ -1,0 +1,53 @@
+{
+  "date": "2026-10-10",
+  "desktop": {
+    "version": "1.1.2",
+    "residency": "serverHeadless",
+    "profile": "ohos-interop-20261010",
+    "binary_sha256": "2730ecdce31b099cffdebdcb085d49b3fbf98858dbabb894aca4bafa02c0583b",
+    "connection": "isolated daemon.conn"
+  },
+  "harmony": {
+    "target": "127.0.0.1:5555",
+    "bundle": "app.uniclipboard.harmony.interop",
+    "hap_sha256": "fea292e48933849718c13415724679d5b86a0c939e071182c39fbe840fa1fc6e",
+    "hap_size": 105511587,
+    "sdk": "API 26 emulator"
+  },
+  "directions": {
+    "ohos_to_macos": {
+      "text": "UC-OHOS-to-macOS-1791598950703154000",
+      "detail": {
+        "id": "b1dba4c5-aba2-4f50-a6b1-576bc97ad8a6",
+        "content": "UC-OHOS-to-macOS-1791598950703154000",
+        "sizeBytes": 36,
+        "createdAtMs": 1791598952165,
+        "activeTimeMs": 1791598952165,
+        "mimeType": "text/plain"
+      }
+    },
+    "macos_to_ohos": {
+      "text": "UC-macOS-to-OHOS-1791598953857589000",
+      "report": {
+        "snapshotHash": "blake3v1:310cc7ee3328992b998e691f8e051c96a4527fdbf870177e1faf04ab6a1c8e52",
+        "atMs": 1791598953884,
+        "totalAccepted": 1,
+        "totalDuplicate": 0,
+        "totalOffline": 0,
+        "totalErrored": 0,
+        "perTarget": [
+          {
+            "deviceId": "c98fb4f3-c9f0-47ac-b99a-f88f18b9ecf7",
+            "outcome": "accepted"
+          }
+        ]
+      }
+    }
+  },
+  "scope": [
+    "P2P text interop only.",
+    "Desktop test profile used a newly initialized space; user/default desktop profile was not touched.",
+    "Harmony isolated bundle and desktop daemon were temporary test instances.",
+    "No image/file interop, physical device, formal signing, real outage, or system plaintext scan."
+  ]
+}

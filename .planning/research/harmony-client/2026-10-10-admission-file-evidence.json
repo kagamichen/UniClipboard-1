@@ -1,0 +1,82 @@
+{
+  "date": "2026-10-10",
+  "desktop": {
+    "version": "1.1.2",
+    "profile": "ohos-admission-20261010",
+    "binarySha256": "2730ecdce31b099cffdebdcb085d49b3fbf98858dbabb894aca4bafa02c0583b",
+    "mode": "serverHeadless"
+  },
+  "emulator": {
+    "target": "127.0.0.1:5555",
+    "bundle": "app.uniclipboard.harmony.interop",
+    "finalHapSha256": "39ec7ba1efebc09fd399cec591b6d7377004fde7453d1857b530247b3d757737"
+  },
+  "admission": {
+    "readyWithoutManualRefresh": true,
+    "firstReadySampleAfterClickSeconds": 2,
+    "samplingIncludesToolOverhead": true,
+    "testedHapSha256": "d1370a8d45402891a164dcef41548618f9572b3157d6e56ab40d84a5f27e3cd4",
+    "note": "Initial device admission used the first fix build; final build additionally preserves an already recovered space after a prior rejected join."
+  },
+  "fileInterop": {
+    "sourceName": "UC-interop-64MiB.bin",
+    "sourceBytes": 67108864,
+    "sourceSha256": "6115ecebc2415d3f6d0e6dd65a950889c3e4b460f1ca0a0f1e676cd0ebf3a15b",
+    "report": {
+      "entryId": "9aa90add-2c48-42e5-882b-8f9ba6b11260",
+      "snapshotHash": "blake3v1:15dcd93f5ae04c0a6be05b6947f9e61457ee988789e7e85d1676157ac77a5371",
+      "atMs": 1791599663994,
+      "totalAccepted": 1,
+      "totalDuplicate": 0,
+      "totalOffline": 0,
+      "totalErrored": 0,
+      "totalPending": 0,
+      "perTarget": [
+        {
+          "deviceId": "357e8696-a680-48e0-9ed4-665372dcda6e",
+          "outcome": "accepted"
+        }
+      ]
+    },
+    "receiverExport": {
+      "fileBytes": 67108864,
+      "fileSha256": "6115ecebc2415d3f6d0e6dd65a950889c3e4b460f1ca0a0f1e676cd0ebf3a15b",
+      "zipBytes": 67109042,
+      "zipSha256": "e641130ed588dd4988e37e9fea0f2d73d171ee269f965f4a685c4a38c8bf1311"
+    },
+    "reverseZipTransfer": {
+      "desktopEntryId": "db7b904d-f301-4d2b-b464-758e29d342b4",
+      "bytes": 67109042,
+      "sha256": "e641130ed588dd4988e37e9fea0f2d73d171ee269f965f4a685c4a38c8bf1311",
+      "transferStatus": "completed"
+    }
+  },
+  "mainHap": {
+    "sha256": "4e97b17a90a9418a66ea8383c0c0763fafd8111b86845259bc8119d8b9664023",
+    "bytes": 105518224,
+    "readyAfterClipboardReset": true
+  },
+  "validation": {
+    "clientNodePassed": 92,
+    "nativeHostSmoke": "passed, including fresh queryDeviceGroupChoices null admission",
+    "api26ReleaseBuild": "passed"
+  },
+  "limits": [
+    "Forward transfer used initial admission-fix build; reverse transfer used final build.",
+    "No network interruption, cancellation, disk full or resume verified.",
+    "No physical device, desktop GUI clipboard or image interop verified."
+  ],
+  "newStartupIssue": {
+    "stage": "before admission query",
+    "error": "UC_ENGINE:1101:unavailable:true",
+    "systemLog": "Pasteboard RemoveInvalidUri removed one invalid file URI",
+    "control": "Same diagnostic HAP started after restoring a plain text clipboard through the isolated app",
+    "status": "unresolved; exact startup dependency still requires investigation",
+    "diagnosticInstrumentation": "removed"
+  },
+  "testState": {
+    "desktopDaemon": "stopped",
+    "isolatedApp": "installed, backgrounded",
+    "profile": "preserved for next image/file/interruption checks"
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "environment": {
+    "target": "127.0.0.1:5555",
+    "kind": "HarmonyOS API 26 emulator",
+    "hap_sha256": "1b2c47e0abd96ca10f66ab7dbe6bc310b52abbaf94ffda1167ab4e9c292534f8"
+  },
+  "image_restore": {
+    "entry_id": "d8326897-9896-4cff-b9a4-3cd1b9f19618",
+    "steps": [
+      "Restore image history entry",
+      "Send image using system clipboard"
+    ],
+    "receipt": {
+      "accepted": 0,
+      "duplicate": 0,
+      "offline": 1,
+      "pending": 0,
+      "errored": 0
+    },
+    "scope": "Local system image restore, PNG re-encoding and Engine ingestion; no new remote delivery or pixel/byte comparison."
+  },
+  "share_warm": {
+    "action": "ohos.want.action.sendData",
+    "mime": "text/plain",
+    "parameter": "ohos.extra.param.key.content",
+    "text": "UC-Share-Warm-1791598310936759000",
+    "draft_matches": 1,
+    "confirmation_prompt_matches": 1,
+    "history_check": "Inconclusive: initial inputText command omitted coordinates; results excluded."
+  },
+  "share_cold": {
+    "text": "UC-Share-Cold-1791598337518575000",
+    "draft_matches": 1,
+    "before_send_query_matches": 1,
+    "before_send_restore_buttons": 0,
+    "after_explicit_send_query_matches": 1,
+    "after_explicit_send_history_matches": 1,
+    "after_explicit_send_restore_buttons": 1
+  },
+  "limitations": [
+    "Explicit aa start Want delivery does not verify discovery in the system share panel or other providers.",
+    "B remains stopped; no new remote delivery verified.",
+    "No physical-device, HDR, large-image, memory or storage-plaintext acceptance."
+  ]
+}

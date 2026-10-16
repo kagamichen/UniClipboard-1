@@ -1,0 +1,59 @@
+{
+  "date": "2026-10-10",
+  "environment": {
+    "sender": "macOS UniClipboard 1.1.2 serverHeadless, isolated profile",
+    "receiver": "HarmonyOS API 26 emulator, app.uniclipboard.harmony.interop",
+    "hapSha256": "ee4948d79563f61cc29db59a0e9cb31ae1b60c4a1a09236e6a9791c2be21d56e",
+    "receiverAvailableBeforeTest": "2.9 GiB"
+  },
+  "dispatch": {
+    "entryId": "0af82536-3053-4aab-83a9-6bcb87eeca11",
+    "snapshotHash": "blake3v1:7bcc1b775546d6453c39a549466d2097cb00c06e15fcd30b98a9dc150b041a33",
+    "atMs": 1791601389441,
+    "totalAccepted": 0,
+    "totalDuplicate": 0,
+    "totalOffline": 0,
+    "totalErrored": 0,
+    "totalPending": 1,
+    "perTarget": []
+  },
+  "cancel": {
+    "lastObservedCompletedBytes": 243924992,
+    "totalBytes": 268435456,
+    "clickedAtUnixSeconds": 1791601397.372468,
+    "observedResult": "传输操作：cancelled",
+    "exactByteCountAtCancellationUnknown": true,
+    "historyQuery": "UC-cancel-256MiB",
+    "restoreButtonsAfterCancellation": 0
+  },
+  "retry": {
+    "defaultResend": {
+      "code": "NO_ELIGIBLE_TARGETS",
+      "message": "no eligible targets for resend"
+    },
+    "explicitTargetResend": {
+      "accepted": 1,
+      "duplicate": 0,
+      "offline": 0,
+      "errored": 0,
+      "pending": 0
+    },
+    "historyContainsFilename": true,
+    "systemSaveResult": "已将全部文件导出为 ZIP。",
+    "hashVerification": {
+      "sourceBytes": 268435456,
+      "sourceSha256": "f155f0bcdc83d84a58166ff9b7ce31ad878b1bc701e107f27a9f286f20ab04cc",
+      "zipBytes": 268435634,
+      "zipSha256": "0f176859c59eba2e642e55e3cb06788137e08abea1b85e409f36ef81a38261e4",
+      "entryName": "UC-cancel-256MiB.bin",
+      "receivedSha256": "f155f0bcdc83d84a58166ff9b7ce31ad878b1bc701e107f27a9f286f20ab04cc",
+      "allBytesMatch": true
+    }
+  },
+  "limits": [
+    "UI progress is a sample before clicking, not an exact cancellation offset.",
+    "Successful explicit-target retry does not prove byte-range resumption or automatic retry.",
+    "No disk-full, network outage, process interruption or physical-device acceptance in this test.",
+    "Default resend returned NO_ELIGIBLE_TARGETS; success was obtained through the public explicit-target resend request, not by altering delivery records."
+  ]
+}
