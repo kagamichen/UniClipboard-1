@@ -1,0 +1,20 @@
+{
+  "string": [
+    {
+      "name": "module_desc",
+      "value": "UniClipboard 鸿蒙客户端"
+    },
+    {
+      "name": "entry_ability_desc",
+      "value": "UniClipboard 鸿蒙客户端"
+    },
+    {
+      "name": "entry_ability_label",
+      "value": "UniClipboard"
+    },
+    {
+      "name": "clipboard_permission",
+      "value": "读取您选择发送的剪贴板内容"
+    }
+  ]
+}

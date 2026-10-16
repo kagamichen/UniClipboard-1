@@ -1,0 +1,13 @@
+/.hvigor/
+/build/
+/entry/build/
+/entry/.preview/
+/entry/oh_modules/
+/oh_modules/
+/local.properties
+/libs/*.har
+/libs/release-manifest.json
+/entry/src/main/cpp/types/libuc_ohos_napi/index.d.ts
+
+/engine-lock.local.json
+/libs/*.build.json
