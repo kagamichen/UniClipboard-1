@@ -70,6 +70,13 @@ sendImage                 unlockSpace              updateMemberSyncPreferences u
 
 工作量：S。W0.1 的提交拆分需要 Engine 仓的 `docs/agent/*` 规则（提交策略、Rust 规范）。
 
+2026-10-16 提交记录与推送阻塞：
+
+- 产品仓 `9fef9ff` 之上已提交 6 个提交（客户端源码、测试、构建脚本与锁、文档、apps 索引、研究记录），提交后 `git status` 干净，被忽略的构建输入（开发 HAR、`index.d.ts`、`engine-lock.local.json`、`local.properties`）仍在原位，Node 测试 98/98。
+- Engine 仓 `18415aa` 之上已提交 5 个提交、41 个文件（完整集合 ZIP 导出与零字节文件、显式发送意图、产品宿主接口、清单与验收宿主、契约计划），提交后 `git status` 干净；`cargo check -p uc-ohos-napi --locked` 在 Rust 1.95.0 下通过，绑定 Python 测试 9/9 通过。
+- **两个仓库均未推送**：GitHub 凭据 `kagamichen` 对 `UniClipboard/UniClipboard` 与 `UniClipboard/Engine` 都返回 403（无写权限），且 `kagamichen/UniClipboard` 不存在同名 fork。推送需要可写凭据、fork，或由仓库所有者执行。
+- 提交代码与已验证状态一致：Engine 侧被修改的代码文件时间均早于开发 HAR 构建时刻（2026-10-10 09:30），`sourceDeclarationsSha256` 与 `engine-lock.local.json` 记录值完全一致；构建后仅 exec-plan 文档被再次编辑。
+
 ### W1 Engine 官方发布收敛（关键路径，跨仓）
 
 | 编号 | 事项 | 验证 |
