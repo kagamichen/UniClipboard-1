@@ -1,7 +1,0 @@
-{
-  module: {
-    name: 'engine',
-    type: 'har',
-    deviceTypes: ['phone', 'tablet'],
-  },
-}
