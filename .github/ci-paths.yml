@@ -83,6 +83,11 @@ gui_go:
   - 'docs/architecture/gui-go-host-commands.md'
   - '.github/docker/build-bookworm.Dockerfile'
 
+# The SDK-free HarmonyOS client suite: the whole client tree plus shared CI config.
+ohos:
+  - *ci_config
+  - 'apps/ohos/**'
+
 # Both integration suites execute the Go CLI against the real Rust daemon.
 daemon_runtime_inputs: &daemon_runtime_inputs
   - 'apps/daemon/**'

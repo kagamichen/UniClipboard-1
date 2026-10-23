@@ -24,6 +24,7 @@ function route(files: string[]): string[] {
         'e2e',
         'membership',
         'tooling',
+        'ohos',
       ].includes(name)
     )
     .filter(([, rules]) =>
@@ -74,6 +75,7 @@ describe('PR check routing', () => {
     ['cli-go', 'cli_go'],
     ['gui-go', 'gui_go'],
     ['tooling', 'tooling'],
+    ['ohos', 'ohos'],
   ])('connects %s to its %s routing result', (job, filter) => {
     expect(workflow('pr-check.yml').jobs[job].if).toContain(`outputs.${filter} == 'true'`)
   })
@@ -90,6 +92,13 @@ describe('PR check routing', () => {
     ],
     ['documentation', ['apps/cli-go/README.md', 'docs-site/content/docs/zh/cli/reference.mdx'], []],
     ['release workflow', ['.github/workflows/release.yml'], ['tooling']],
+    ['HarmonyOS client', ['apps/ohos/entry/src/main/ets/pages/Index.ets'], ['ohos']],
+    [
+      'HarmonyOS CI config',
+      ['.github/workflows/pr-check.yml'],
+      // ci_config is shared by every component filter, plus tooling's workflows glob.
+      ['cli_go', 'e2e', 'frontend', 'gui_go', 'membership', 'ohos', 'quick_panel', 'rust', 'tooling'],
+    ],
     ['schema', ['schema/openapi.json'], ['frontend', 'rust']],
     ['CLI E2E script', ['scripts/e2e/build-cli.sh'], ['e2e', 'membership', 'tooling']],
   ])('routes %s changes to their consumers', (_name, files, expected) => {

@@ -33,6 +33,7 @@ jobs:
       e2e: ${{ steps.filter.outputs.e2e }}
       membership: ${{ steps.filter.outputs.membership }}
       tooling: ${{ steps.filter.outputs.tooling }}
+      ohos: ${{ steps.filter.outputs.ohos }}
 
     steps:
       - uses: actions/checkout@v4
@@ -80,6 +81,39 @@ jobs:
           bun-version: latest
       - run: bun install --frozen-lockfile
       - run: bun x vitest run
+
+  # HarmonyOS client checks, mirroring the "验证" section of
+  # apps/ohos/README.md. None of these steps needs the DevEco SDK:
+  # prepare-engine.py downloads and verifies the pinned official HAR,
+  # the Node/Python suites run against stub Engine/system APIs, and
+  # bash -n only parses the build/sign scripts.
+  ohos:
+    name: HarmonyOS Client Tests
+    needs: changes
+    if: ${{ needs.changes.outputs.ohos == 'true' }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Validate Engine HAR lock
+        run: python3 apps/ohos/scripts/prepare-engine.py
+
+      - name: Run session and host adapter tests
+        run: node --experimental-strip-types --test apps/ohos/tests/*.test.mjs
+
+      - name: Run prepare-engine and HAP audit tests
+        env:
+          PYTHONDONTWRITEBYTECODE: '1'
+        run: python3 -m unittest discover -s apps/ohos/tests -p 'test_*.py' -v
+
+      - name: Check shell script syntax
+        run: bash -n apps/ohos/build-emulator.sh apps/ohos/sign-emulator.sh
 
   cli-go:
     name: Go CLI Compile Check
