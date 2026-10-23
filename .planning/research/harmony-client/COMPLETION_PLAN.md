@@ -77,6 +77,13 @@ sendImage                 unlockSpace              updateMemberSyncPreferences u
 - **两个仓库均未推送**：GitHub 凭据 `kagamichen` 对 `UniClipboard/UniClipboard` 与 `UniClipboard/Engine` 都返回 403（无写权限），且 `kagamichen/UniClipboard` 不存在同名 fork。推送需要可写凭据、fork，或由仓库所有者执行。
 - 提交代码与已验证状态一致：Engine 侧被修改的代码文件时间均早于开发 HAR 构建时刻（2026-10-10 09:30），`sourceDeclarationsSha256` 与 `engine-lock.local.json` 记录值完全一致；构建后仅 exec-plan 文档被再次编辑。
 
+2026-10-23 进展（用户决策 D8=退役、D5 追加=改用个人 fork 推送；W3 本轮不推进）：
+
+- **W0.3 完成（核对）**：`apps/ohos/README.md`「使用本地 Engine 开发包」一节已记录 `build-emulator.sh --har-only`、`UniClipboardEngine.build.json` 指纹字段与 `prepare-engine.py --local-har` 导入流程，满足可重建性要求。
+- **W0.4 完成**：`apps/ohos-probe`（33 个跟踪文件）已删除，`apps/AGENTS.md` 索引行同步更新并注明由 `ohos/` 客户端取代；`BRIEF.md` 中的历史性提及保留为研究记录，不改写。
+- **W2.1 完成**：`pr-check.yml` 新增 `ohos` job（`changes` 过滤器 `apps/ohos/**` 与 workflow 自身；Node 22 依次执行 `prepare-engine.py` 官方包校验、`node --experimental-strip-types --test`、Python unittest、`bash -n`，均不需要 SDK）。本地验证 node 98/98、python 17/17、`bash -n` 通过；CI 红绿验收经 fork PR 执行。
+- **推送（fork 方案）**：组织仓凭据仍不可写；产品仓经 `private` 远端推送至 `kagamichen/UniClipboard` fork，Engine 仓同样 fork 后推送，再从 fork 向组织仓开 PR 触发 CI。组织仓 `main` 的正式同步待可写凭据。
+
 ### W1 Engine 官方发布收敛（关键路径，跨仓）
 
 | 编号 | 事项 | 验证 |
