@@ -32,6 +32,7 @@ function fixture() {
   const newCommit = 'b'.repeat(40)
   const version = 'v1.2.3-rc.4'
   const sourceArchive = Buffer.from('verified source archive')
+  const harBytes = Buffer.from('verified harmony har')
   const manifest = {
     schemaVersion: 1,
     release: { version, commit: newCommit },
@@ -40,6 +41,11 @@ function fixture() {
         name: 'UniClipboardEngine-source.tar.gz',
         sha256: createHash('sha256').update(sourceArchive).digest('hex'),
         size: sourceArchive.length,
+      },
+      {
+        name: 'UniClipboardEngine.har',
+        sha256: createHash('sha256').update(harBytes).digest('hex'),
+        size: harBytes.length,
       },
     ],
   }
@@ -51,7 +57,22 @@ function fixture() {
     join(root, 'Cargo.toml'),
     `[workspace.dependencies]\nuc-engine = { git = "https://github.com/UniClipboard/Engine.git", rev = "${oldCommit}" }\n`
   )
-  return { root, version, newCommit, manifestPath, archivePath }
+  write(
+    join(root, 'apps/ohos/engine-lock.json'),
+    `${JSON.stringify(
+      {
+        release: 'v1.1.0-rc.22',
+        commit: oldCommit,
+        minimumApi: 24,
+        artifact: 'UniClipboardEngine.har',
+        sha256: '0'.repeat(64),
+        size: 1,
+      },
+      null,
+      2
+    )}\n`
+  )
+  return { root, version, newCommit, manifestPath, archivePath, manifest, harBytes }
 }
 
 afterEach(() => {
@@ -60,7 +81,7 @@ afterEach(() => {
 
 describe('desktop Engine release adoption', () => {
   it('updates the desktop Engine dependency after verifying the release source', () => {
-    const { root, version, newCommit, manifestPath, archivePath } = fixture()
+    const { root, version, newCommit, manifestPath, archivePath, harBytes } = fixture()
 
     execFileSync(
       process.execPath,
@@ -83,6 +104,45 @@ describe('desktop Engine release adoption', () => {
     const cargo = readFileSync(join(root, 'Cargo.toml'), 'utf8')
     expect(cargo.match(new RegExp(newCommit, 'g'))).toHaveLength(1)
     expect(cargo).not.toContain('a'.repeat(40))
+
+    const lock = readFileSync(join(root, 'apps/ohos/engine-lock.json'), 'utf8')
+    expect(JSON.parse(lock)).toEqual({
+      release: version,
+      commit: newCommit,
+      minimumApi: 24,
+      artifact: 'UniClipboardEngine.har',
+      sha256: createHash('sha256').update(harBytes).digest('hex'),
+      size: harBytes.length,
+    })
+    expect(lock.endsWith('}\n')).toBe(true)
+  })
+
+  it('rejects a release manifest without the HarmonyOS HAR artifact', () => {
+    const { root, manifest, manifestPath, archivePath } = fixture()
+    manifest.artifacts = manifest.artifacts.filter(candidate => candidate.name !== 'UniClipboardEngine.har')
+    write(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`)
+
+    const result = spawnSync(
+      process.execPath,
+      [
+        adopter,
+        '--root',
+        root,
+        '--version',
+        manifest.release.version,
+        '--source-commit',
+        manifest.release.commit,
+        '--manifest',
+        manifestPath,
+        '--source-archive',
+        archivePath,
+      ],
+      { encoding: 'utf8' }
+    )
+
+    expect(result.status).toBe(1)
+    expect(result.stderr).toContain('does not declare the UniClipboardEngine.har artifact')
+    expect(readFileSync(join(root, 'Cargo.toml'), 'utf8')).toContain('a'.repeat(40))
   })
 
   it('rejects a notification that disagrees with the public release manifest', () => {
@@ -132,12 +192,19 @@ describe('desktop Engine release adoption', () => {
     expect(workflow).toContain("if: ${{ needs.validate.outputs.changed == 'true' }}")
     expect(workflow).toContain('cp Cargo.toml "$RUNNER_TEMP/Cargo.toml.base"')
     expect(workflow).toContain('cp Cargo.lock "$RUNNER_TEMP/Cargo.lock.base"')
+    expect(workflow).toContain('cp apps/ohos/engine-lock.json "$RUNNER_TEMP/engine-lock.json.base"')
+    expect(workflow).toContain('cmp -s "$RUNNER_TEMP/engine-lock.json.base" apps/ohos/engine-lock.json')
+    expect(workflow).toContain('check-engine-lock-consistency.mjs')
     expect(workflow).toContain('cmp -s "$RUNNER_TEMP/Cargo.toml.base" Cargo.toml')
     expect(workflow).toContain('cmp -s "$RUNNER_TEMP/Cargo.lock.base" Cargo.lock')
     expect(workflow).not.toContain('git diff')
     expect(workflow).toMatch(
-      /actions\/upload-artifact@v4[\s\S]*name: engine-adoption-files[\s\S]*path: \|\s+Cargo\.toml\s+Cargo\.lock/
+      /actions\/upload-artifact@v4[\s\S]*name: engine-adoption-files[\s\S]*path: \|\s+Cargo\.toml\s+Cargo\.lock\s+apps\/ohos\/engine-lock\.json/
     )
+    expect(workflow).toContain(
+      'cp engine-adoption-files/apps/ohos/engine-lock.json apps/ohos/engine-lock.json'
+    )
+    expect(workflow).toContain('git add Cargo.toml Cargo.lock apps/ohos/engine-lock.json')
     expect(workflow).toMatch(
       /actions\/download-artifact@v4[\s\S]*name: engine-adoption-files[\s\S]*path: engine-adoption-files/
     )

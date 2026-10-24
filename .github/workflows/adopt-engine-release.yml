@@ -37,6 +37,7 @@ jobs:
           echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
           cp Cargo.toml "$RUNNER_TEMP/Cargo.toml.base"
           cp Cargo.lock "$RUNNER_TEMP/Cargo.lock.base"
+          cp apps/ohos/engine-lock.json "$RUNNER_TEMP/engine-lock.json.base"
 
       - uses: dtolnay/rust-toolchain@stable
 
@@ -61,11 +62,15 @@ jobs:
       - name: Verify Engine repository boundaries
         run: bun run check:engine-repository
 
+      - name: Verify the desktop and HarmonyOS Engine locks agree
+        run: node scripts/architecture/check-engine-lock-consistency.mjs
+
       - id: change
         name: Detect the proposed update
         run: |
           if cmp -s "$RUNNER_TEMP/Cargo.toml.base" Cargo.toml &&
-            cmp -s "$RUNNER_TEMP/Cargo.lock.base" Cargo.lock; then
+            cmp -s "$RUNNER_TEMP/Cargo.lock.base" Cargo.lock &&
+            cmp -s "$RUNNER_TEMP/engine-lock.json.base" apps/ohos/engine-lock.json; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
           else
             echo "changed=true" >> "$GITHUB_OUTPUT"
@@ -78,6 +83,7 @@ jobs:
           path: |
             Cargo.toml
             Cargo.lock
+            apps/ohos/engine-lock.json
           if-no-files-found: error
           retention-days: 1
 
@@ -107,7 +113,8 @@ jobs:
         run: |
           cp engine-adoption-files/Cargo.toml Cargo.toml
           cp engine-adoption-files/Cargo.lock Cargo.lock
-          git add Cargo.toml Cargo.lock
+          cp engine-adoption-files/apps/ohos/engine-lock.json apps/ohos/engine-lock.json
+          git add Cargo.toml Cargo.lock apps/ohos/engine-lock.json
 
       - name: Push the deterministic branch
         env:

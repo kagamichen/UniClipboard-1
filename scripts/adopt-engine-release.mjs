@@ -88,4 +88,43 @@ for (const dependency of ['uc-engine']) {
 if (replacements !== 1) fail('did not update every Engine dependency')
 writeFileSync(cargoPath, cargo)
 
+// The same release must also move the HarmonyOS official HAR lock so the
+// desktop dependency and apps/ohos stay on one Engine version. Engine release
+// bundles always carry the HAR (Engine's verify-release-bundle.mjs rejects a
+// bundle without it), so a manifest lacking the artifact is not adoptable.
+const harArtifact = manifest.artifacts?.find(
+  candidate => candidate.name === 'UniClipboardEngine.har'
+)
+if (!harArtifact || !/^[0-9a-f]{64}$/.test(harArtifact.sha256 ?? '')) {
+  fail('release manifest does not declare the UniClipboardEngine.har artifact')
+}
+if (!Number.isInteger(harArtifact.size) || harArtifact.size <= 0) {
+  fail('release manifest declares an invalid UniClipboardEngine.har size')
+}
+const lockPath = resolve(root, 'apps/ohos/engine-lock.json')
+let previousLock
+try {
+  previousLock = JSON.parse(readFileSync(lockPath, 'utf8'))
+} catch (_error) {
+  fail('apps/ohos/engine-lock.json is missing or invalid; the release cannot be adopted')
+}
+if (!Number.isInteger(previousLock.minimumApi) || previousLock.minimumApi <= 0) {
+  fail('apps/ohos/engine-lock.json does not declare a usable minimumApi')
+}
+writeFileSync(
+  lockPath,
+  `${JSON.stringify(
+    {
+      release: version,
+      commit: sourceCommit,
+      minimumApi: previousLock.minimumApi,
+      artifact: harArtifact.name,
+      sha256: harArtifact.sha256,
+      size: harArtifact.size,
+    },
+    null,
+    2
+  )}\n`
+)
+
 process.stdout.write(`Adopted Engine ${version} at ${sourceCommit}\n`)

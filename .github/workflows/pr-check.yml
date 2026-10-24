@@ -104,6 +104,9 @@ jobs:
       - name: Validate Engine HAR lock
         run: python3 apps/ohos/scripts/prepare-engine.py
 
+      - name: Verify the desktop and HarmonyOS Engine locks agree
+        run: node scripts/architecture/check-engine-lock-consistency.mjs
+
       - name: Run session and host adapter tests
         run: node --experimental-strip-types --test apps/ohos/tests/*.test.mjs
 
@@ -280,6 +283,9 @@ jobs:
 
       - name: Verify Engine repository extraction rules
         run: bun run check:engine-repository
+
+      - name: Verify the desktop and HarmonyOS Engine locks agree
+        run: node scripts/architecture/check-engine-lock-consistency.mjs
 
       - name: Verify cargo audit exception assumptions
         run: bun run check:cargo-audit-exceptions
