@@ -91,6 +91,8 @@ sendImage                 unlockSpace              updateMemberSyncPreferences u
 - **验证**：`cargo check --workspace --all-targets --locked`、`cargo test -p uc-ohos-napi`（54 项）、绑定清单 Python（9 项）、三件套真实 N-API 烟测（host/host_failure/p2p，macOS 宿主）、实现↔声明静态零漂移、`cargo fmt`。`host_failure_smoke` 夹具随上游 58f287c（日志迁至 `<private_data>/logs`）同步更新。
 - **已推送**：fork `kagamichen/Engine` 的 `harmony-client-bindings` 分支（`6274215` 合并 + `b44131d` 对齐修复）。
 - **注意**：Engine 的 Rust 规范与架构门禁在 `origin/main` 即红（`local_file.rs`、`network_log.rs` 等为上游原有违规，文件与上游逐字节一致），非合并引入；W1.2 正式发布前需上游修复或豁免。W1.2（发版出 HAR）需组织仓写权限或由维护者执行。
+- **W1.3 本地等价完成（2026-10-25）**：从合并分支（`b44131d`，`sourceState: clean`）重建开发 HAR（34.0 MB，基线 rc.23），`prepare-engine.py --local-har` 导入产品并通过校验，`engine-lock.local.json` 指向已提交源；产品 Node 98/98、Python 17/17、`bash -n`、Release HAP 构建与 `audit-hap.py` 全部通过。正式 W1.3（切官方包、删本地锁）仍待 W1.2 发版。
+- **环境隐患记录**：两仓工作树均发现 Finder 式 ` 2` 后缀重复文件（Engine 侧 133 个、产品侧 16 个，均未跟踪），会静默破坏构建（restool 资源重名）或污染静态门禁；本轮已清理，来源疑似同步/复制工具，复发时按 `find . \( -name '* 2.*' -o -name '* 2' \)` 清除。
 
 ### W1 Engine 官方发布收敛（关键路径，跨仓）
 
