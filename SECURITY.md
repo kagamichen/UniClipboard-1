@@ -28,6 +28,23 @@ We aim to acknowledge new reports within a few business days and will keep you
 updated through triage, the fix, and coordinated disclosure. Thank you for
 helping keep UniClipboard users safe.
 
+## Mobile and HarmonyOS Clients
+
+The HarmonyOS client (`apps/ohos`) reuses the same Engine core, so the
+end-to-end encryption and ciphertext-at-rest guarantees described in this
+repository's architecture apply unchanged. Its host-side data boundaries
+(clipboard, secure storage, file handles, diagnostics export) are documented
+in `apps/ohos/docs/permissions.md`.
+
+The client is **not released yet**. Until a signed distribution exists:
+
+- it has **no auto-updater** and no release artifacts, so the desktop keys
+  and `SHA256SUMS` mechanism above do not cover it;
+- HAP artifacts produced by the emulator build scripts are development-only
+  and must not be distributed;
+- how a released HAP will be signed and verified will be defined together
+  with the first signed HarmonyOS release.
+
 ## Verifying Release Downloads
 
 UniClipboard uses two **independent** signing mechanisms, both built on
