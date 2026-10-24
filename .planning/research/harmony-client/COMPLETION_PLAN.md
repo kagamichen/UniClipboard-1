@@ -85,6 +85,13 @@ sendImage                 unlockSpace              updateMemberSyncPreferences u
 - **推送（fork 方案）**：组织仓凭据仍不可写。产品仓已推送至 fork `kagamichen/UniClipboard-1` 的 `main`（rebase 到组织仓最新 `ad25b75` 之上）；Engine 仓 5 个提交 rebase 时与上游 87 个提交发生真实代码冲突，属 W1.1 语义合并范围，故原样推送至 fork `kagamichen/Engine` 的 `harmony-client-bindings` 分支保护工作。
 - **CI 红绿验收受阻**：从 fork 向组织仓开 PR 被 `Resource not accessible by personal access token` 拒绝（PAT 无组织仓 PR 权限）。W2.1 的本地等价验证已全绿（node 98/98、python 17/17、`bash -n`、`check:tauri-retired` 通过，路由测试断言已补）；PR 级验收待可写凭据或由仓库所有者发起。另：本地 `kagamichen/UniClipboard` 为 2026-10-16 遗留的空壳非 fork 仓库，可手动删除。
 
+2026-10-24 进展（W1.1 完成）：
+
+- **Engine 合并**：本地 5 个绑定提交与上游 87 项提交（v1.1.0-rc.23；uc-infra 拆分为七个 infra crate、网络栈迁入 third_party/iroh 子模块）完成 merge。要点：文件导出读取适配器随 fs 迁入 `uc-infra-local`（补 uc-application 端口依赖）；客户端契约的四个传输方法保留 `transfer.rs` 的 Operation 通道版本，删除上游重复实现与 items 版进度类型，保留上游独有的 `retryEntryReceive`；恢复流程采上游 `RecoveryOutcome` 结构并以显式意图 `delivery_enabled(Automatic)` 门控，补 `CancellationIncomplete` 分支；声明对齐合并后的 51 方法面。
+- **验证**：`cargo check --workspace --all-targets --locked`、`cargo test -p uc-ohos-napi`（54 项）、绑定清单 Python（9 项）、三件套真实 N-API 烟测（host/host_failure/p2p，macOS 宿主）、实现↔声明静态零漂移、`cargo fmt`。`host_failure_smoke` 夹具随上游 58f287c（日志迁至 `<private_data>/logs`）同步更新。
+- **已推送**：fork `kagamichen/Engine` 的 `harmony-client-bindings` 分支（`6274215` 合并 + `b44131d` 对齐修复）。
+- **注意**：Engine 的 Rust 规范与架构门禁在 `origin/main` 即红（`local_file.rs`、`network_log.rs` 等为上游原有违规，文件与上游逐字节一致），非合并引入；W1.2 正式发布前需上游修复或豁免。W1.2（发版出 HAR）需组织仓写权限或由维护者执行。
+
 ### W1 Engine 官方发布收敛（关键路径，跨仓）
 
 | 编号 | 事项 | 验证 |
