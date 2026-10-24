@@ -73,25 +73,11 @@ if (sha256(sourceBytes) !== sourceArtifact.sha256) {
   fail('source archive checksum does not match the release')
 }
 
-const cargoPath = resolve(root, 'Cargo.toml')
-let cargo = readFileSync(cargoPath, 'utf8')
-let replacements = 0
-for (const dependency of ['uc-engine']) {
-  const pattern = new RegExp(
-    `^(${dependency.replace('-', '\\-')}\\s*=\\s*\\{[^\\n]*git\\s*=\\s*"${ENGINE_GIT_URL.replaceAll('.', '\\.')}"[^\\n]*rev\\s*=\\s*")[0-9a-f]{40}("[^\\n]*\\})$`,
-    'm'
-  )
-  if (!pattern.test(cargo)) fail(`Cargo.toml does not contain the pinned ${dependency} dependency`)
-  cargo = cargo.replace(pattern, `$1${sourceCommit}$2`)
-  replacements += 1
-}
-if (replacements !== 1) fail('did not update every Engine dependency')
-writeFileSync(cargoPath, cargo)
-
-// The same release must also move the HarmonyOS official HAR lock so the
-// desktop dependency and apps/ohos stay on one Engine version. Engine release
-// bundles always carry the HAR (Engine's verify-release-bundle.mjs rejects a
-// bundle without it), so a manifest lacking the artifact is not adoptable.
+// Validate the HarmonyOS HAR artifact and the existing lock before touching
+// any file, so a rejected release cannot leave a half-applied pin behind.
+// Engine release bundles always carry the HAR (Engine's
+// verify-release-bundle.mjs rejects a bundle without it), so a manifest
+// lacking the artifact is not adoptable.
 const harArtifact = manifest.artifacts?.find(
   candidate => candidate.name === 'UniClipboardEngine.har'
 )
@@ -111,6 +97,24 @@ try {
 if (!Number.isInteger(previousLock.minimumApi) || previousLock.minimumApi <= 0) {
   fail('apps/ohos/engine-lock.json does not declare a usable minimumApi')
 }
+
+const cargoPath = resolve(root, 'Cargo.toml')
+let cargo = readFileSync(cargoPath, 'utf8')
+let replacements = 0
+for (const dependency of ['uc-engine']) {
+  const pattern = new RegExp(
+    `^(${dependency.replace('-', '\\-')}\\s*=\\s*\\{[^\\n]*git\\s*=\\s*"${ENGINE_GIT_URL.replaceAll('.', '\\.')}"[^\\n]*rev\\s*=\\s*")[0-9a-f]{40}("[^\\n]*\\})$`,
+    'm'
+  )
+  if (!pattern.test(cargo)) fail(`Cargo.toml does not contain the pinned ${dependency} dependency`)
+  cargo = cargo.replace(pattern, `$1${sourceCommit}$2`)
+  replacements += 1
+}
+if (replacements !== 1) fail('did not update every Engine dependency')
+writeFileSync(cargoPath, cargo)
+
+// Both inputs were validated up front; writing the lock completes the
+// atomic adoption of the release for the desktop pin and the HarmonyOS HAR.
 writeFileSync(
   lockPath,
   `${JSON.stringify(

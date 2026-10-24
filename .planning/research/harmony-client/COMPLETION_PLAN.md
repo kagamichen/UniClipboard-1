@@ -105,7 +105,7 @@ sendImage                 unlockSpace              updateMemberSyncPreferences u
 
 - **W1.4 完成**：`adopt-engine-release.mjs` 现要求发布清单含 `UniClipboardEngine.har` 条目并在更新 Cargo.toml 的同时原子更新 `apps/ohos/engine-lock.json`（保留 minimumApi）；adoption 工作流的基线快照、变更检测、产物上传与 PR 应用均纳入锁文件；新增 `scripts/architecture/check-engine-lock-consistency.mjs` 并接入 pr-check 的 ohos 与 rust 两个 job。
 - **过渡态例外**：当前桌面 Cargo 指 `a8e1b2c`（rc.22 之后、rc.23 未发版），ohos 官方锁仍为 rc.22——检查器按 cargo-audit 例外模式放行且仅放行这一精确组合（任一侧单独移动即红），理由与移除条件写在脚本内。
-- **验证（演练）**：临时树实跑 adopter（rc.24 双针同步、锁格式与 minimumApi 保留）；检查器五态演练（对齐通过 / rc.22 漂移检出 / 精确例外通过 / 例外期手改锁检出 / 真实树通过）；测试更新 `adopt-engine-release.test.ts`（锁断言 + 缺 HAR 拒绝 + 工作流断言）并新增 `engine-lock-consistency.test.ts`（含 rc.22 反向演练）；tsc 环境外错误为零。vitest 本地不可用（npm 缓存损坏），两套件由 CI tooling job 执行。
+- **验证（演练）**：临时树实跑 adopter（rc.24 双针同步、锁格式与 minimumApi 保留；缺 HAR 的发布在任何写入前拒绝，Cargo 不被触碰）；检查器五态演练（对齐通过 / rc.22 漂移检出 / 精确例外通过 / 例外期手改锁检出 / 真实树通过）；两个 vitest 套件 **12/12 真实执行通过**（绕开 npm Arborist 损坏：临时目录 `--legacy-peer-deps` 安装 vitest@4.1.6 后以 node_modules 符号链接挂入仓库根运行），首次运行暴露的"缺 HAR 时 Cargo 已被改写"半应用缺陷已按 fail-fast 前置校验修复并复验。
 
 ### W1 Engine 官方发布收敛（关键路径，跨仓）
 
