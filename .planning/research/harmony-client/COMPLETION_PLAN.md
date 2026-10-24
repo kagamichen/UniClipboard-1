@@ -81,8 +81,9 @@ sendImage                 unlockSpace              updateMemberSyncPreferences u
 
 - **W0.3 完成（核对）**：`apps/ohos/README.md`「使用本地 Engine 开发包」一节已记录 `build-emulator.sh --har-only`、`UniClipboardEngine.build.json` 指纹字段与 `prepare-engine.py --local-har` 导入流程，满足可重建性要求。
 - **W0.4 完成**：`apps/ohos-probe`（33 个跟踪文件）已删除，`apps/AGENTS.md` 索引行同步更新并注明由 `ohos/` 客户端取代；`BRIEF.md` 中的历史性提及保留为研究记录，不改写。
-- **W2.1 完成**：`pr-check.yml` 新增 `ohos` job（`changes` 过滤器 `apps/ohos/**` 与 workflow 自身；Node 22 依次执行 `prepare-engine.py` 官方包校验、`node --experimental-strip-types --test`、Python unittest、`bash -n`，均不需要 SDK）。本地验证 node 98/98、python 17/17、`bash -n` 通过；CI 红绿验收经 fork PR 执行。
-- **推送（fork 方案）**：组织仓凭据仍不可写；产品仓经 `private` 远端推送至 `kagamichen/UniClipboard` fork，Engine 仓同样 fork 后推送，再从 fork 向组织仓开 PR 触发 CI。组织仓 `main` 的正式同步待可写凭据。
+- **W2.1 完成**：`pr-check.yml` 新增 `ohos` job（`changes` 过滤器 `apps/ohos/**` 与 workflow 自身；Node 22 依次执行 `prepare-engine.py` 官方包校验、`node --experimental-strip-types --test`、Python unittest、`bash -n`，均不需要 SDK）。本地验证 node 98/98、python 17/17、`bash -n` 通过；PR 级红绿验收受阻于 PAT 权限（见下）。
+- **推送（fork 方案）**：组织仓凭据仍不可写。产品仓已推送至 fork `kagamichen/UniClipboard-1` 的 `main`（rebase 到组织仓最新 `ad25b75` 之上）；Engine 仓 5 个提交 rebase 时与上游 87 个提交发生真实代码冲突，属 W1.1 语义合并范围，故原样推送至 fork `kagamichen/Engine` 的 `harmony-client-bindings` 分支保护工作。
+- **CI 红绿验收受阻**：从 fork 向组织仓开 PR 被 `Resource not accessible by personal access token` 拒绝（PAT 无组织仓 PR 权限）。W2.1 的本地等价验证已全绿（node 98/98、python 17/17、`bash -n`、`check:tauri-retired` 通过，路由测试断言已补）；PR 级验收待可写凭据或由仓库所有者发起。另：本地 `kagamichen/UniClipboard` 为 2026-10-16 遗留的空壳非 fork 仓库，可手动删除。
 
 ### W1 Engine 官方发布收敛（关键路径，跨仓）
 
