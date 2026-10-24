@@ -904,3 +904,95 @@ test('clipboard system read errors are never converted into an empty snapshot', 
   };
   await assert.rejects(new ClipboardAdapter().read(), /OHOS_CLIPBOARD_UNAVAILABLE/);
 });
+
+// W2.5 stub regressions: M6 disk-full / mid-stream failure cleanup / fsync failure.
+
+test('an immediate disk-full write failure surfaces and the handle still releases exactly once', () => {
+  const f = fileFixture(() => { throw new Error('ENOSPC'); });
+  assert.throws(() => f.files.fileWriteChunk(f.handle, '0', new Uint8Array([1, 2, 3])), /OHOS_FILE_IO/);
+  f.files.remove(f.handle);
+  assert.deepEqual(f.calls, ['close']);
+});
+
+test('a mid-stream write failure keeps the delivered prefix, fails loudly and leaves the registry reusable', () => {
+  const delivered = [];
+  const f = fileFixture((_fd, buffer, options) => {
+    if (delivered.length >= 1) throw new Error('ENOSPC');
+    const count = Math.min(2, options.length);
+    delivered.push({ offset: options.offset, bytes: Array.from(new Uint8Array(buffer).slice(0, count)) });
+    return count;
+  });
+  assert.throws(() => f.files.fileWriteChunk(f.handle, '10', new Uint8Array([7, 8, 9, 10])), /OHOS_FILE_IO/);
+  assert.deepEqual(delivered, [{ offset: 10, bytes: [7, 8] }]);
+  f.files.remove(f.handle);
+  assert.deepEqual(f.calls, ['close']);
+
+  const next = f.files.registerOutput('fixture://output-2');
+  delivered.length = 0;
+  f.files.fileWriteChunk(next, '0', new Uint8Array([42]));
+  f.files.fileFinishWrite(next);
+  f.files.remove(next);
+  assert.deepEqual(f.calls, ['close', 'sync', 'close']);
+});
+
+test('an fsync failure fails the finish without latching success', () => {
+  const f = fileFixture(() => 1);
+  fileIo.fsyncSync = () => { throw new Error('ENOSPC'); };
+  assert.throws(() => f.files.fileFinishWrite(f.handle), /OHOS_FILE_IO/);
+  // finished must remain false, so a retried finish syncs again instead of
+  // reporting a durable export that never reached the disk.
+  assert.throws(() => f.files.fileFinishWrite(f.handle), /OHOS_FILE_IO/);
+  fileIo.fsyncSync = () => f.calls.push('sync');
+  f.files.fileFinishWrite(f.handle);
+  f.files.remove(f.handle);
+  assert.deepEqual(f.calls, ['sync', 'close']);
+});
+
+// W2.5 stub regressions: M7 network switch sequencing and lifecycle guards.
+
+test('network switches notify once per transition and stop unregisters', () => {
+  const { monitor, instances } = networkFixture();
+  let notified = 0;
+  monitor.start(() => { notified += 1; });
+  const net = instances[0];
+  net.completeRegistration(undefined);
+  net.handlers.netAvailable({});
+  net.handlers.netLost({});
+  net.handlers.netUnavailable();
+  net.handlers.netAvailable({});
+  assert.equal(notified, 4);
+  monitor.stop();
+  net.handlers.netLost({});
+  assert.equal(notified, 4);
+  assert.equal(net.unregisterCount, 1);
+});
+
+test('a duplicate start is ignored instead of leaking a second registration', () => {
+  const { monitor, instances } = networkFixture();
+  let first = 0;
+  let second = 0;
+  monitor.start(() => { first += 1; });
+  monitor.start(() => { second += 1; });
+  assert.equal(instances.length, 1);
+  instances[0].completeRegistration(undefined);
+  instances[0].handlers.netAvailable({});
+  assert.equal(first, 1);
+  assert.equal(second, 0);
+  monitor.stop();
+});
+
+test('a failed registration is discarded so a later start can recover', () => {
+  const { monitor, instances } = networkFixture();
+  let notified = 0;
+  monitor.start(() => { notified += 1; });
+  instances[0].completeRegistration({ code: 201 });
+  assert.equal(instances[0].unregisterCount, 0);
+
+  monitor.start(() => { notified += 10; });
+  assert.equal(instances.length, 2);
+  instances[1].completeRegistration(undefined);
+  instances[0].handlers.netAvailable({});
+  instances[1].handlers.netAvailable({});
+  assert.equal(notified, 10);
+  monitor.stop();
+});

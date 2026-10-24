@@ -91,7 +91,7 @@ bash -n apps/ohos/build-emulator.sh apps/ohos/sign-emulator.sh
 
 HAP 审计要求明确的 debug 布尔字段，Release 审计拒绝调试包和未列入权限策略的额外权限；该检查不代替签名验证或完整安全审计。
 
-会话测试使用替身 Engine，Host 测试使用替身系统 API，验证并发、错误、部分写入与安全存储损坏处理。它们不覆盖 ArkTS 编译和真机权限。Engine 仓另有已执行的真实 N-API 单进程和双进程验证；范围与结果见验收记录。
+会话测试使用替身 Engine，Host 测试使用替身系统 API，验证并发、错误、部分写入与安全存储损坏处理。它们不覆盖 ArkTS 编译和真机权限。Engine 仓另有已执行的真实 N-API 单进程和双进程验证；范围与结果见验收记录。以上 Node/Python 套件与脚本语法检查同样在 CI 的 `HarmonyOS Client Tests` job 中对 `apps/ohos/**` 改动运行（不需要 SDK）。当前开发集成使用 Engine 合并分支（rc.23 基线）构建的本地 HAR，官方包仍锁定 rc.22；切回官方包用 `prepare-engine.py --release`。
 
 规格见 [产品范围](docs/PRODUCT_SCOPE.md)、[权限](docs/permissions.md) 和 [验收记录](docs/verification.md)。
 

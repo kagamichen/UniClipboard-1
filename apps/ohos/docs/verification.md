@@ -454,3 +454,9 @@ A 实际输入唯一测试文本后，历史搜索能找到唯一匹配；点击
 重新启动同一 profile 的 daemon 后，配对设备在约 8 秒采样内恢复 `Trusted` 且 `connected=true`，peerId 与停止前相同。鸿蒙随后发送另一唯一文字，回执为“已接收 1 · 重复 0 · 离线 0 · 等待 0 · 失败 0”；桌面历史详情逐字返回同一 `text/plain` 内容。没有重建空间、修改配对或点击网络恢复按钮。
 
 证据见 `.planning/research/harmony-client/2026-10-10-offline-recovery-evidence.json`。该轮验证的是对端 daemon 停止/启动造成的离线恢复，不是有效网络断开、Wi-Fi/蜂窝切换、relay 故障转移或真机验收；完整 M7/M8 仍未完成，修改未提交或推送。
+
+## 2026-10-25 W2.4 TS28014 收口与合并后链路复验
+
+此前"已有证据"中记录的会话 TS 检查 TS28014 警告（N-API 声明未验证，退出 2）在当前工具链不再复现：DevEco API 26 SDK 下，`tsconfig.session.json` 独立检查退出 0 且无输出，`OHOS_BUILD_MODE=release` 全量 ArkTS/HAP 构建日志中无任何 TS28014。当前工具链的 TypeScript 编译器亦无该扩展错误码。编译验证以 hvigor Release 构建为准；若未来工具链升级再现同类警告，按已知限制记录，不据此回退构建结论。
+
+同轮复验：Engine 合并分支（rc.23 基线，`sourceState: clean`）重建开发 HAR 并经 `prepare-engine.py --local-har` 导入后，客户端 Node 98/98、Python 17/17、`bash -n`、Release HAP 构建与 `audit-hap.py` 全部通过（HAP SHA-256 `5f0844d5…03dc`，114,576,345 字节）。构建前清除了工作树中 16 个 Finder 式 ` 2` 后缀重复资源文件，其曾导致 restool 资源重名构建失败。

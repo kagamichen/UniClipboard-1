@@ -94,6 +94,13 @@ sendImage                 unlockSpace              updateMemberSyncPreferences u
 - **W1.3 本地等价完成（2026-10-25）**：从合并分支（`b44131d`，`sourceState: clean`）重建开发 HAR（34.0 MB，基线 rc.23），`prepare-engine.py --local-har` 导入产品并通过校验，`engine-lock.local.json` 指向已提交源；产品 Node 98/98、Python 17/17、`bash -n`、Release HAP 构建与 `audit-hap.py` 全部通过。正式 W1.3（切官方包、删本地锁）仍待 W1.2 发版。
 - **环境隐患记录**：两仓工作树均发现 Finder 式 ` 2` 后缀重复文件（Engine 侧 133 个、产品侧 16 个，均未跟踪），会静默破坏构建（restool 资源重名）或污染静态门禁；本轮已清理，来源疑似同步/复制工具，复发时按 `find . \( -name '* 2.*' -o -name '* 2' \)` 清除。
 
+2026-10-25 进展（W2.4/W2.5/W2.6 完成，W2 就此只剩 SDK 依赖项）：
+
+- **W2.4 完成（按"不再复现"收口）**：TS28014 在当前工具链无法复现——`tsconfig.session.json` 独立检查退出 0 无输出，Release 全量构建日志零 TS28014，且当前 SDK 编译器无该错误码；结论与后续处理规则已记录于 `apps/ohos/docs/verification.md` 2026-10-25 节。
+- **W2.5 完成**：新增 6 项替身回归——M6 三项（ENOSPC 即时失败仍恰好释放一次句柄；中途写失败保留已交付前缀、大声失败且注册表可复用；fsync 失败不把 finished 锁成假成功）与 M7 三项（netAvailable/netLost/netUnavailable 每次切换恰好通知一次且 stop 后静默；重复 start 不泄漏第二份注册；注册失败丢弃后可重新 start 恢复）。客户端 Node 测试 98→104。
+- **W2.6 完成**：`BRIEF.md` 头部状态更新并新增 2026-10-25 接续点（旧章节保留为历史）；`apps/AGENTS.md` ohos 行改为"官方锁 rc.22 + 开发集成本地 HAR；最低 API 24，已在 API 26 验证"；`README.md` 验证节补 CI job 说明与当前 HAR 状态。
+- W2.2（SDK 构建工作流）与 W2.3（API 24 矩阵）仍需 SDK 环境支撑，维持待办。
+
 ### W1 Engine 官方发布收敛（关键路径，跨仓）
 
 | 编号 | 事项 | 验证 |

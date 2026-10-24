@@ -1,6 +1,10 @@
 # 鸿蒙客户端实施依据
 
-日期：2026-10-05。状态：开发集成完成，未完成真机和发布验收。
+日期：2026-10-05。状态：开发集成完成，收尾进行中（见 `COMPLETION_PLAN.md`）；未完成真机和发布验收。
+
+## 当前接续点（2026-10-25）
+
+权威收尾清单与逐项状态见本目录 `COMPLETION_PLAN.md`。要点：客户端与全部证据已提交（产品仓 fork `kagamichen/UniClipboard-1`）；Engine 侧 5 个绑定提交已与上游 rc.23 完成合并验证并推送 fork `kagamichen/Engine:harmony-client-bindings`；`apps/ohos-probe` 已退役；CI 新增 SDK-free 客户端 job；TS28014 不再复现（见 `apps/ohos/docs/verification.md` 2026-10-25 节）。仍被外部资源阻塞：Engine 正式发版（W1.2，需组织仓写权限）、设备与网络验收（W3，需模拟器许可/真机）、正式签名（W4/W5，需开发者账号）。下文 2026-10-10 及更早章节保留调查历史。
 
 ## 当前接续点（2026-10-10）
 
